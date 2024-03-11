@@ -9,20 +9,22 @@ class Element():
     def draw(self):
         raise NotImplementedError()
     
-    def normal_pos(self, position=None):
+    def normal_pos(self, position=None, width=None):
         if not position:
             position = self.position
+        if not width:
+            width = self.width
 
         x = position[0]
         if callable(x):
-            x = x(self.width)
+            x = x(width)
 
         # hope that its easy to draw
         im = self.draw()
 
         res = self.video.resolution
         video_aspect_ratio = res[0]/res[1]
-        height = self.width/im.width*im.height * video_aspect_ratio
+        height = width/im.width*im.height * video_aspect_ratio
 
         y = position[1]
         if callable(y):

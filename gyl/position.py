@@ -1,4 +1,4 @@
 def center(position_val):
-    def f(size_val):
-        return position_val-size_val/2
+    def f(width_val):
+        return position_val-width_val/2
     return f

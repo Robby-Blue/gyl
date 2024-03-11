@@ -22,8 +22,7 @@ class Video():
         self.current_scene().elements.append(element)
 
     def animate(self, element, animation):
-        self.current_scene().add_event({
-            "type": "animation",
+        self.current_scene().add_animation({
             "element": element,
             "animation": animation
         })

@@ -4,6 +4,7 @@ class Animation():
 
     element = None
     interpolate = None
+    scene = None
 
     def __init__(self, interpolate):
         if not interpolate:

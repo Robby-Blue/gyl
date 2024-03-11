@@ -5,19 +5,19 @@ from video_renderer import VideoRenderer
 class Scene():
 
     elements = []
-    events = []
+    animations = []
 
     def __init__(self, elements):
         self.elements = list(elements)
-        self.events = []
+        self.animations = []
 
-    def add_event(self, event):
-        self.events.append(event)
+    def add_animation(self, animation):
+        self.animations.append(animation)
 
     def render(self, file_name, resolution):
         renderer = VideoRenderer(file_name, resolution)
 
-        for frame in self.plan():
+        for frame in self.plan_frames():
             img = Image.new("RGBA", resolution, color=(20, 20, 20))
             draw = ImageDraw.Draw(img)
             for element in frame:
@@ -42,20 +42,18 @@ class Scene():
         
         renderer.done()
 
-    def plan(self):
+    def plan_frames(self):
         frame_count = 0
         animations = []
 
-        for event in self.events:
-            event_type = event["type"]
-            element = event["element"]
-            # idk if ill ever add others
-            if event_type == "animation":
-                animation = event["animation"]
-                animation.element = element
-                animations.append(animation)
-                if animation.get_length() > frame_count:
-                    frame_count = animation.get_length()
+        for event in self.animations:
+            animation = event["animation"]
+
+            animation.element = event["element"]
+            animation.scene = self
+            animations.append(animation)
+            if animation.get_length() > frame_count:
+                frame_count = animation.get_length()
 
         frames = []
          
