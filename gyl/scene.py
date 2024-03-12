@@ -24,16 +24,19 @@ class Scene():
                 # add var to whether it stays the same, no need to redraw
                 # if it stays the same
 
-                im = element.draw()
+                imwidth, imheight = element.get_size()
 
                 normal_pos = element.normal_pos()
 
                 x = normal_pos[0]*resolution[0]/100
                 y = normal_pos[1]*resolution[1]/100
 
-                width = element.width*resolution[0]/100
-                height = width/im.width*im.height
+                width = element.normal_width()*resolution[0]/100
+                if imheight == 0:
+                    imheight = 1
+                height = width/imwidth*imheight
 
+                im = element.draw()
                 res_im = im.resize((int(width), int(height)))
 
                 draw.bitmap((x, y), res_im)

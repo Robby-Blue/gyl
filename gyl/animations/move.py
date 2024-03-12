@@ -11,7 +11,6 @@ class Move(Animation):
     def apply_to_element(self, frame):
         if frame == 0:
             end_width = self.get_end_width()
-            print(end_width)
 
             self.destination = self.element.normal_pos(self.destination, width=end_width)
             self.start_pos = self.element.normal_pos(self.element.position)
@@ -25,10 +24,8 @@ class Move(Animation):
 
     def get_end_width(self):
         for animation in self.scene.animations:
-            print(animation)
             if animation["element"] != self.element:
                 continue
-            print(animation)
             if not isinstance(animation["animation"], Resize):
                 continue
             return animation["animation"].destination_width
