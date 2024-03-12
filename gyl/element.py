@@ -15,8 +15,7 @@ class Element():
     def normal_pos(self, position=None, width=None):
         if not position:
             position = self.position
-        if not width:
-            width = self.normal_width()
+        width = self.normal_width(width)
 
         x = position[0]
         if callable(x):
@@ -38,7 +37,9 @@ class Element():
 
         return (x, y)
     
-    def normal_width(self):
-        if callable(self.width):
-            return self.width(self)
-        return self.width
+    def normal_width(self, width=None):
+        if not width:
+           width = self.width
+        if callable(width):
+            return width(self)
+        return width

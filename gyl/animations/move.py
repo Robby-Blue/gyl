@@ -7,20 +7,24 @@ class Move(Animation):
         super().__init__(interpolation)
         self.start_pos = None
         self.destination = (x, y)
+        self.normal_destination = None
 
     def apply_to_element(self, frame):
         if frame == 0:
             end_width = self.get_end_width()
 
-            self.destination = self.element.normal_pos(self.destination, width=end_width)
+            self.normal_destination = self.element.normal_pos(self.destination, width=end_width)
             self.start_pos = self.element.normal_pos(self.element.position)
 
         time = frame/self.get_length()
 
         self.element.position = (
-            self.interpolate(self.start_pos[0], self.destination[0], time),
-            self.interpolate(self.start_pos[1], self.destination[1], time)
+            self.interpolate(self.start_pos[0], self.normal_destination[0], time),
+            self.interpolate(self.start_pos[1], self.normal_destination[1], time)
         )
+
+        if frame == self.get_length():
+            self.element.position = self.destination
 
     def get_end_width(self):
         for animation in self.scene.animations:
