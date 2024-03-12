@@ -1,15 +1,13 @@
-from elements.text import Text, lineheight
+from elements.text import Text
 from video import Video
 from position import *
+from animations.edittext import EditText
 
 if __name__ == "__main__":
     video = Video()
 
     text = Text("test text", (1, 1))
     video.add_element(text)
-    text2 = Text("test", (1, 11))
-    video.add_element(text2)
-    text3 = Text("really long test text goes here", (1, 21))
-    video.add_element(text3)
+    video.animate(text, EditText("other test"))
 
     video.render()

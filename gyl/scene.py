@@ -32,9 +32,12 @@ class Scene():
                 y = normal_pos[1]*resolution[1]/100
 
                 width = element.normal_width()*resolution[0]/100
-                if imheight == 0:
-                    imheight = 1
+                if imwidth == 0:
+                    continue
                 height = width/imwidth*imheight
+
+                if imwidth < 0 or imheight < 0:
+                    continue
 
                 im = element.draw()
                 res_im = im.resize((int(width), int(height)))
