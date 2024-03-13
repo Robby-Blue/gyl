@@ -1,6 +1,6 @@
 from PIL import Image, ImageDraw
 import copy
-from video_renderer import VideoRenderer
+from gyl.video_renderer import VideoRenderer
 
 class Scene():
 

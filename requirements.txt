@@ -1,0 +1,2 @@
+fast-diff-match-patch
+Pillow

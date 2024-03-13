@@ -1,7 +1,7 @@
-from elements.text import Text
-from video import Video
-from position import *
-from animations.edittext import EditText
+from gyl.elements.text import Text
+from gyl.video import Video
+from gyl.position import *
+from gyl.animations.edittext import EditText
 
 if __name__ == "__main__":
     video = Video()

@@ -1,6 +1,6 @@
-from animation import Animation
+from gyl.animation import Animation
+from gyl.interpolation import linear
 from fast_diff_match_patch import diff
-from interpolation import linear
 
 class EditText(Animation):
 

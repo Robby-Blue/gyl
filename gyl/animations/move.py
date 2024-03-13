@@ -1,5 +1,5 @@
-from animation import Animation
-from animations.resize import Resize
+from gyl.animation import Animation
+from gyl.animations.resize import Resize
 
 class Move(Animation):
 

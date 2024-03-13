@@ -1,4 +1,4 @@
-from interpolation import smooth
+from gyl.interpolation import smooth
 
 class Animation():
 

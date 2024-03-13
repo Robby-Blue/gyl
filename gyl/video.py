@@ -1,4 +1,4 @@
-from scene import Scene
+from gyl.scene import Scene
 
 class Video():
     

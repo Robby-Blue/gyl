@@ -1,4 +1,4 @@
-from animation import Animation
+from gyl.animation import Animation
 
 class Resize(Animation):
 

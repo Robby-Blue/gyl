@@ -1,8 +1,8 @@
-from element import Element
+from gyl.element import Element
 from PIL import Image, ImageDraw, ImageFont
 import os
 
-FONT_FILE = "gyl/fonts/Roboto-Black.ttf"
+FONT_FILE = os.path.dirname(__file__)+"/../fonts/Roboto-Black.ttf"
 
 if not os.path.exists(FONT_FILE):
     raise FileNotFoundError(f"Font file {FONT_FILE} not found")
