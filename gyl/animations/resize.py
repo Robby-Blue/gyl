@@ -20,5 +20,8 @@ class Resize(Animation):
         if frame == self.get_length():
             self.element.width = self.destination_width
 
+    def get_animation_type(self):
+        return "EDITATTR"
+
     def get_length(self):
         return 20

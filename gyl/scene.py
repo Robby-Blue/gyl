@@ -17,10 +17,10 @@ class Scene():
     def render(self, file_name, resolution):
         renderer = VideoRenderer(file_name, resolution)
 
-        for frame in self.plan_frames():
+        for frame_count, frame in enumerate(self.plan_frames()):
             img = Image.new("RGBA", resolution, color=(20, 20, 20))
             draw = ImageDraw.Draw(img)
-            for element in frame:
+            for element, post_draw_animations in frame:
                 # add var to whether it stays the same, no need to redraw
                 # if it stays the same
 
@@ -40,6 +40,10 @@ class Scene():
                     continue
 
                 im = element.draw()
+
+                for animation in post_draw_animations:
+                    im = animation.apply_to_img(im, frame_count)
+
                 res_im = im.resize((int(width), int(height)), resample=Image.LANCZOS)
 
                 draw.bitmap((x, y), res_im)
@@ -65,10 +69,23 @@ class Scene():
          
         for i in range(frame_count+1):
             for animation in animations:
+                if i > animation.get_length():
+                    continue
+                if animation.get_animation_type() != "EDITATTR":
+                    continue
                 animation.apply_to_element(i)
 
             frames.append([])
             for element in self.elements:
-                frames[-1].append(copy.copy(element))
+
+                post_draw_anims = []
+                for animation in animations:
+                    if i > animation.get_length():
+                        continue
+                    if animation.get_animation_type() != "EDITIMG":
+                        continue
+                    post_draw_anims.append(animation)
+
+                frames[-1].append((copy.copy(element), post_draw_anims))
 
         return frames

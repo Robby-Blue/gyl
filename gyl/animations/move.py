@@ -34,6 +34,9 @@ class Move(Animation):
                 continue
             return animation["animation"].destination_width
         return self.element.width
+    
+    def get_animation_type(self):
+        return "EDITATTR"
 
     def get_length(self):
         return 20

@@ -43,6 +43,9 @@ class EditText(Animation):
 
         texts.append(str(current_text))
         return texts
+    
+    def get_animation_type(self):
+        return "EDITATTR"
 
     def get_length(self):
         return 50
