@@ -40,7 +40,7 @@ class Scene():
                     continue
 
                 im = element.draw()
-                res_im = im.resize((int(width), int(height)))
+                res_im = im.resize((int(width), int(height)), resample=Image.LANCZOS)
 
                 draw.bitmap((x, y), res_im)
 
