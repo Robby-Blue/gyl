@@ -9,7 +9,7 @@ class VideoRenderer():
             "-s", f"{resolution[0]}x{resolution[1]}", # resolution
             "-pix_fmt", "rgba",
             "-r", "30",  # fps
-            "-i", "-",  # input is pioe
+            "-i", "-",  # input is pipe
             "-an",
             "-loglevel", "error",
             file_name

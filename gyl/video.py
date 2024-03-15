@@ -1,4 +1,6 @@
 from gyl.scene import Scene
+import subprocess
+import os
 
 class Video():
     
@@ -13,8 +15,26 @@ class Video():
         self.add_scene()
 
     def render(self):
+        output_folder = "scenes"
+        scenes_file = f"{output_folder}/scenes.txt"
+        f = open(scenes_file, "w")
         for i, scene in enumerate(self.scenes):
-            scene.render(f"{i}.mp4", self.resolution)
+            output_file = f"{output_folder}/{i}.mp4"
+            f.write(f"file '{os.path.abspath(output_file)}'\n")
+            scene.render(output_file, self.resolution)
+        f.close()
+
+        command = [
+            "ffmpeg",
+            "-y",
+            "-safe", "0",
+            "-f", "concat",
+            "-i", scenes_file,
+            "-loglevel", "error",
+            "full.mp4"
+        ]
+
+        subprocess.Popen(command)
 
     def add_element(self, element):
         element.video = self
