@@ -80,6 +80,8 @@ class Scene():
 
                 post_draw_anims = []
                 for animation in animations:
+                    if animation.element != element:
+                        continue
                     if i > animation.get_length():
                         continue
                     if animation.get_animation_type() != "EDITIMG":
