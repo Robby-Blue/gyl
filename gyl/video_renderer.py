@@ -23,3 +23,4 @@ class VideoRenderer():
             
     def done(self):
         self.process.stdin.close()
+        self.process.wait()

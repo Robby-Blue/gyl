@@ -16,6 +16,10 @@ class Video():
 
     def render(self):
         output_folder = "scenes"
+
+        if not os.path.exists(output_folder):
+            os.mkdir(output_folder)
+
         scenes_file = f"{output_folder}/scenes.txt"
         f = open(scenes_file, "w")
         for i, scene in enumerate(self.scenes):

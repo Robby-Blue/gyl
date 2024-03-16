@@ -39,7 +39,7 @@ class Scene():
                 if imwidth < 0 or imheight < 0:
                     continue
 
-                im = element.draw()
+                im = copy.copy(element.draw())
 
                 for animation in post_draw_animations:
                     im = animation.apply_to_img(im, frame_count)

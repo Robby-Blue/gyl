@@ -10,6 +10,7 @@ setup(
     install_requires=[
         'fast-diff-match-patch',
         'Pillow',
+        'cairosvg'
     ],
     data_files=[('gyl/fonts', ['gyl/fonts/Roboto-Black.ttf'])],
 )

@@ -1,2 +1,3 @@
 fast-diff-match-patch
 Pillow
+cairosvg

@@ -15,6 +15,7 @@ class SlideReveal(Animation):
 
         transparent_img = Image.new('RGBA', (width, height), (255, 255, 255, 0))
         im.paste(transparent_img, (shown_width, 0))
+
         return im
 
     def get_animation_type(self):
