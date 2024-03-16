@@ -1,4 +1,5 @@
 from gyl.element import Element
+from gyl.size import lineheight
 from PIL import Image, ImageDraw, ImageFont
 import os
 
@@ -36,19 +37,3 @@ class Text(Element):
     def get_size(self):
         bbox = text_font.getbbox(self.text)
         return bbox[2], text_height
-    
-def lineheight(height):
-    # calculate the elements width such that it has a specific
-    # line height
-    def f(text_element):
-        imwidth, imheight = text_element.get_size()
-        if imwidth == 0:
-            return 0
-        
-        res = text_element.video.resolution
-        video_aspect_ratio = res[0]/res[1]
-
-        w = (height*imwidth/imheight*video_aspect_ratio)
-        w = height/ video_aspect_ratio/imheight*imwidth
-        return w
-    return f

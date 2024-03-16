@@ -1,4 +1,5 @@
 from gyl.element import Element
+from gyl.size import lineheight
 from PIL import Image
 from io import BytesIO
 import cairosvg
@@ -59,7 +60,7 @@ class Latex(Element):
         p.wait()
 
         out = BytesIO()
-        cairosvg.svg2png(url=svg_file, write_to=out,output_width=1000)
+        cairosvg.svg2png(url=svg_file, write_to=out, scale=50)
         self.image = Image.open(out)
 
         shutil.rmtree(tmp_folder)
@@ -69,19 +70,3 @@ class Latex(Element):
     
     def get_size(self):
         return self.image.width, self.image.height
-
-def lineheight(height):
-    # calculate the elements width such that it has a specific
-    # line height
-    def f(text_element):
-        imwidth, imheight = text_element.get_size()
-        if imwidth == 0:
-            return 0
-        
-        res = text_element.video.resolution
-        video_aspect_ratio = res[0]/res[1]
-
-        w = (height*imwidth/imheight*video_aspect_ratio)
-        w = height/ video_aspect_ratio/imheight*imwidth
-        return w
-    return f

@@ -41,10 +41,10 @@ class Scene():
 
                 im = copy.copy(element.draw())
 
-                for animation in post_draw_animations:
-                    im = animation.apply_to_img(im, frame_count)
-
                 res_im = im.resize((int(width), int(height)), resample=Image.LANCZOS)
+
+                for animation in post_draw_animations:
+                    res_im = animation.apply_to_img(res_im, frame_count)
 
                 draw.bitmap((x, y), res_im)
 
