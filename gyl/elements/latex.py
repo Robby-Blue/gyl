@@ -6,6 +6,7 @@ import cairosvg
 import subprocess
 import os
 import shutil
+import hashlib
 
 preample="""
 \\documentclass{article}
@@ -31,10 +32,23 @@ class Latex(Element):
         full_latex = preample+ \
             content+"\n"+\
             "\\end{document}"
+
+        cache_folder = os.path.join("scenes", ".cache")
+        md5_hash = hashlib.md5(full_latex.encode()).hexdigest()
+
+        svg_file = f"{cache_folder}/{md5_hash}.svg"
         
+        if not os.path.exists(svg_file):
+            self.create_latex(full_latex)
+            self.create_svg(svg_file)
+
+        out = BytesIO()
+        cairosvg.svg2png(url=svg_file, write_to=out, scale=10)
+        self.image = Image.open(out)
+
+    def create_latex(self, full_latex):
         tmp_folder = "latextmp"
         tmp_tex_file = f"{tmp_folder}/tmp.tex"
-        expected_output_file = f"{tmp_folder}/tmp.dvi"
 
         if not os.path.exists(tmp_folder):
             os.mkdir(tmp_folder)
@@ -53,18 +67,13 @@ class Latex(Element):
             # and read the log if theres any error messages
             raise ValueError("Latex failed, check installation and equation")
 
-        svg_file = f"{tmp_folder}/tmp.svg"
-
+    def create_svg(self, svg_file):
+        expected_output_file = f"latextmp/tmp.dvi"
         p = subprocess.Popen(["dvisvgm", expected_output_file, "-n", "-o", svg_file],
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL)
         p.wait()
-
-        out = BytesIO()
-        cairosvg.svg2png(url=svg_file, write_to=out, scale=10)
-        self.image = Image.open(out)
-
-        shutil.rmtree(tmp_folder)
+        shutil.rmtree("latextmp")
 
     def draw(self):
         return self.image

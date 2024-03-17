@@ -14,13 +14,18 @@ class Video():
         self.resolution = resolution
         self.add_scene()
 
-    def render(self):
         output_folder = "scenes"
+        cache_folder = os.path.join(output_folder, ".cache")
 
         if not os.path.exists(output_folder):
             os.mkdir(output_folder)
+        if not os.path.exists(cache_folder):
+            os.mkdir(cache_folder)
 
+    def render(self):
         rendered = 0
+
+        output_folder = "scenes"
 
         scenes_file = f"{output_folder}/scenes.txt"
         f = open(scenes_file, "w")
@@ -28,7 +33,7 @@ class Video():
             output_file = f"{output_folder}/{i}.mp4"
             f.write(f"file '{os.path.abspath(output_file)}'\n")
 
-            did_render = scene.render(output_file, self.resolution)
+            did_render = scene.render(output_file)
 
             if did_render:
                 rendered+=1
@@ -63,7 +68,7 @@ class Video():
         self.current_scene().elements.remove(element)
 
     def add_scene(self):
-        self.scenes.append(Scene(self.elements))    
+        self.scenes.append(Scene(self.elements, self.resolution))    
         for event in self.backlog:
             self.current_scene().add_event(event)
         self.backlog.clear()
