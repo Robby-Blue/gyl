@@ -23,3 +23,10 @@ class SlideReveal(Animation):
 
     def get_length(self):
         return 20
+       
+    def get_cache(self):
+        return {
+            "type": "Slide",
+            "length": self.get_length(),
+            "interpolation": self.interpolate.__name__
+        }

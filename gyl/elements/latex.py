@@ -26,6 +26,7 @@ class Latex(Element):
         if not width:
             width = lineheight(10)
         super().__init__(position, width)
+        self.content = content
 
         full_latex = preample+ \
             content+"\n"+\
@@ -60,7 +61,7 @@ class Latex(Element):
         p.wait()
 
         out = BytesIO()
-        cairosvg.svg2png(url=svg_file, write_to=out, scale=50)
+        cairosvg.svg2png(url=svg_file, write_to=out, scale=10)
         self.image = Image.open(out)
 
         shutil.rmtree(tmp_folder)
@@ -70,3 +71,11 @@ class Latex(Element):
     
     def get_size(self):
         return self.image.width, self.image.height
+    
+    def get_cache(self):
+        return {
+            "type": "Latex",
+            "pos": self.normal_pos(),
+            "size": self.normal_width(),
+            "content": self.content
+        }

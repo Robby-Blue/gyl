@@ -37,3 +37,11 @@ class Text(Element):
     def get_size(self):
         bbox = text_font.getbbox(self.text)
         return bbox[2], text_height
+    
+    def get_cache(self):
+        return {
+            "type": "Text",
+            "pos": self.normal_pos(),
+            "size": self.normal_width(),
+            "text": self.text
+        }
