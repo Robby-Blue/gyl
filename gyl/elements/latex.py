@@ -43,8 +43,9 @@ class Latex(Element):
             self.create_svg(svg_file)
 
         out = BytesIO()
-        cairosvg.svg2png(url=svg_file, write_to=out, scale=10)
+        cairosvg.svg2png(url=svg_file, write_to=out)
         self.image = Image.open(out)
+        self.image.show()
 
     def create_latex(self, full_latex):
         tmp_folder = "latextmp"
@@ -69,7 +70,7 @@ class Latex(Element):
 
     def create_svg(self, svg_file):
         expected_output_file = f"latextmp/tmp.dvi"
-        p = subprocess.Popen(["dvisvgm", expected_output_file, "-n", "-o", svg_file],
+        p = subprocess.Popen(["dvisvgm", expected_output_file, "-e", "-c", "10,10", "-n", "-o", svg_file],
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL)
         p.wait()

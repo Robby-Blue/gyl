@@ -67,6 +67,10 @@ class Video():
         self.elements.remove(element)
         self.current_scene().elements.remove(element)
 
+    def clear(self):
+        for element in list(self.elements):
+            self.remove_element(element)
+
     def add_scene(self):
         self.scenes.append(Scene(self.elements, self.resolution))    
         for event in self.backlog:
