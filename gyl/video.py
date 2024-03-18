@@ -7,11 +7,10 @@ class Video():
     resolution = ()
     elements = []
     scenes = []
-    backlog = []
-    # eg to remember to remove once next scene starts if theres an animation
 
-    def __init__(self, resolution=(1280, 720)):
+    def __init__(self, resolution=(1280, 720), render_full=False):
         self.resolution = resolution
+        self.render_full = render_full
         self.add_scene()
 
         output_folder = "scenes"
@@ -39,7 +38,7 @@ class Video():
                 rendered+=1
         f.close()
 
-        if len(self.scenes) > 1 and rendered > 0:
+        if len(self.scenes) > 1 and rendered > 0 and self.render_full:
             command = [
                 "ffmpeg",
                 "-y",
@@ -72,10 +71,7 @@ class Video():
             self.remove_element(element)
 
     def add_scene(self):
-        self.scenes.append(Scene(self.elements, self.resolution))    
-        for event in self.backlog:
-            self.current_scene().add_event(event)
-        self.backlog.clear()
+        self.scenes.append(Scene(self.elements, self.resolution))
 
     def current_scene(self):
         return self.scenes[-1]

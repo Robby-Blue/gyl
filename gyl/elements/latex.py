@@ -45,7 +45,6 @@ class Latex(Element):
         out = BytesIO()
         cairosvg.svg2png(url=svg_file, write_to=out)
         self.image = Image.open(out)
-        self.image.show()
 
     def create_latex(self, full_latex):
         tmp_folder = "latextmp"
