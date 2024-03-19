@@ -28,7 +28,6 @@ class Scene():
 
         for frame_count, frame in enumerate(frames):
             img = Image.new("RGBA", self.resolution, color=(20, 20, 20))
-            draw = ImageDraw.Draw(img)
             for element, post_draw_animations in frame:
                 # add var to whether it stays the same, no need to redraw
                 # if it stays the same
@@ -55,7 +54,7 @@ class Scene():
                 for animation in post_draw_animations:
                     res_im = animation.apply_to_img(res_im, frame_count)
 
-                draw.bitmap((x, y), res_im)
+                img.paste(res_im, (int(x),int(y)),mask=res_im)
 
             renderer.add_frame(img)
         

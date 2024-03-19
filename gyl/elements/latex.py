@@ -43,7 +43,7 @@ class Latex(Element):
             self.create_svg(svg_file)
 
         out = BytesIO()
-        cairosvg.svg2png(url=svg_file, write_to=out)
+        cairosvg.svg2png(url=svg_file, write_to=out, negate_colors=True)
         self.image = Image.open(out)
 
     def create_latex(self, full_latex):

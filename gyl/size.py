@@ -29,3 +29,8 @@ def height(element):
             raise ValueError(f"{text_type} Element set to height({first_type}), {first_type} needs to have a functional height")
         return element.width(text_element)*scale
     return get_height
+
+def size_of(element):
+    def get_size_of(_):
+        return element.normal_width()
+    return get_size_of
