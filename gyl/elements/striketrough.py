@@ -5,13 +5,14 @@ from PIL import Image, ImageDraw
 
 class Striketrough(Element):
 
-    def __init__(self, element, vertical=False):
+    def __init__(self, element, vertical=True, linewidth=1):
         self.element = element
         
         self.position = pos_of(element)
         self.width = size_of(element)
 
         self.vertical = vertical
+        self.linewidth = linewidth
 
     def draw(self):
         size = self.get_size()
@@ -19,7 +20,7 @@ class Striketrough(Element):
         x = size[0]
         y = size[1]
 
-        linewidth = size[0]//50
+        linewidth = int((x/50)*self.linewidth)
 
         if self.vertical:
             shape = [(linewidth, y-linewidth),
@@ -44,5 +45,6 @@ class Striketrough(Element):
             "type": "Text",
             "pos": self.normal_pos(),
             "size": self.normal_width(),
-            "vertical": self.vertical
+            "vertical": self.vertical,
+            "width": self.linewidth
         }
