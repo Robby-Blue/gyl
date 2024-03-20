@@ -9,25 +9,24 @@ class Scene():
     elements = []
     animations = []
 
-    def __init__(self, elements, resolution):
+    def __init__(self, elements):
         self.elements = list(elements)
         self.animations = []
-        self.resolution = resolution
 
     def add_animation(self, animation):
         self.animations.append(animation)
 
-    def render(self, file_name):
+    def render(self, file_name, resolution):
         frames = self.plan_frames()
 
         is_cached, write_cache = self.is_cached(file_name, frames)
         if is_cached:
             return False
 
-        renderer = VideoRenderer(file_name, self.resolution)
+        renderer = VideoRenderer(file_name, resolution)
 
         for frame_count, frame in enumerate(frames):
-            img = Image.new("RGBA", self.resolution, color=(20, 20, 20))
+            img = Image.new("RGBA", resolution, color=(20, 20, 20))
             for element, post_draw_animations in frame:
                 # add var to whether it stays the same, no need to redraw
                 # if it stays the same
@@ -36,10 +35,10 @@ class Scene():
 
                 normal_pos = element.normal_pos()
 
-                x = normal_pos[0]*self.resolution[0]/100
-                y = normal_pos[1]*self.resolution[1]/100
+                x = normal_pos[0]*resolution[0]/100
+                y = normal_pos[1]*resolution[1]/100
 
-                width = element.normal_width()*self.resolution[0]/100
+                width = element.normal_width()*resolution[0]/100
                 if imwidth == 0:
                     continue
                 height = width/imwidth*imheight
@@ -142,6 +141,5 @@ class Scene():
                 ])
             cache_obj.append(elements)
         return {
-            "resolution": list(self.resolution),
             "frames": cache_obj
         }
