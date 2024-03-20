@@ -43,6 +43,7 @@ class Video():
                 "-safe", "0",
                 "-f", "concat",
                 "-i", scenes_file,
+                "-pix_fmt", "yuv420p",
                 "-loglevel", "error",
                 "full.mp4"
             ]

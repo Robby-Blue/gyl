@@ -11,6 +11,7 @@ class VideoRenderer():
             "-r", "30",  # fps
             "-i", "-",  # input is pipe
             "-an",
+            "-c:v", "mpeg4",
             "-loglevel", "error",
             file_name
         ]
