@@ -23,6 +23,7 @@ class Scene():
         if is_cached:
             return False
 
+        last_frame = None
         renderer = VideoRenderer(file_name, resolution)
 
         for frame_count, frame in enumerate(frames):
@@ -56,9 +57,13 @@ class Scene():
                 img.paste(res_im, (int(x),int(y)),mask=res_im)
 
             renderer.add_frame(img)
+            if frame_count == len(frames)-1:
+                last_frame = img
         
         renderer.done()
         write_cache()
+
+        last_frame.save(f"{file_name}.last.png", "png")
 
         return True
 
