@@ -77,14 +77,14 @@ class Scene():
             animation.element = event["element"]
             animation.scene = self
             animations.append(animation)
-            if animation.get_length() > frame_count:
-                frame_count = animation.get_length()
+            if animation.get_last_frame() > frame_count:
+                frame_count = animation.get_last_frame()
 
         frames = []
          
         for i in range(frame_count+1):
             for animation in animations:
-                if i > animation.get_length():
+                if i > animation.get_last_frame():
                     continue
                 if animation.get_animation_type() != "EDITATTR":
                     continue
@@ -97,7 +97,7 @@ class Scene():
                 for animation in animations:
                     if animation.element != element:
                         continue
-                    if i > animation.get_length():
+                    if i > animation.get_last_frame():
                         continue
                     if animation.get_animation_type() != "EDITIMG":
                         continue

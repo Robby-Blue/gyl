@@ -4,10 +4,10 @@ from fast_diff_match_patch import diff
 
 class EditText(Animation):
 
-    def __init__(self, text, interpolation=None):
+    def __init__(self, text, interpolation=None, start_frame=0):
         if not interpolation:
             interpolation = linear()
-        super().__init__(interpolation)
+        super().__init__(interpolation, start_frame)
         self.start_string = None
         self.end_string = text
         self.steps = None
@@ -17,8 +17,7 @@ class EditText(Animation):
             start_string = self.element.text
             self.steps = self.plan_steps(start_string, self.end_string)
 
-        time = frame/self.get_length()
-        timed_index = self.interpolate(0, len(self.steps)-1, time)
+        timed_index = self.interpolate(0, len(self.steps)-1, frame)
         self.element.text = self.steps[int(timed_index)]
 
     def plan_steps(self, start_str, end_str):

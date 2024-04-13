@@ -2,8 +2,8 @@ from gyl.animation import Animation
 
 class Resize(Animation):
 
-    def __init__(self, dest, interpolation=None):
-        super().__init__(interpolation)
+    def __init__(self, dest, interpolation=None, start_frame=0):
+        super().__init__(interpolation, start_frame)
         self.start_width = None
         self.destination_width = dest
         self.normed_destination_width = None
@@ -13,11 +13,9 @@ class Resize(Animation):
             self.start_width = self.element.width
             self.normed_destination_width = self.element.normal_width(self.destination_width)
 
-        time = frame/self.get_length()
+        self.element.width = self.interpolate(self.start_width, self.normed_destination_width, frame)
 
-        self.element.width = self.interpolate(self.start_width, self.normed_destination_width, time)
-
-        if frame == self.get_length():
+        if frame == self.get_last_frame():
             self.element.width = self.destination_width
 
     def get_animation_type(self):

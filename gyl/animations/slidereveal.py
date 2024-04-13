@@ -3,15 +3,13 @@ from gyl.animation import Animation
 
 class SlideReveal(Animation):
 
-    def __init__(self, interpolation=None):
-        super().__init__(interpolation)
+    def __init__(self, interpolation=None, start_frame=0):
+        super().__init__(interpolation, start_frame)
 
     def apply_to_img(self, im, frame):
         width, height = im.size
 
-        time = frame/self.get_length()
-        percent = self.interpolate(0, 1, time)
-        shown_width = int(width*percent)
+        shown_width = int(self.interpolate(0, width, frame))
 
         transparent_img = Image.new('RGBA', (width, height), (255, 255, 255, 0))
         im.paste(transparent_img, (shown_width, 0))
@@ -28,5 +26,5 @@ class SlideReveal(Animation):
         return {
             "type": "Slide",
             "length": self.get_length(),
-            "interpolation": self.interpolate.__name__
+            "interpolation": self.interpolator.__name__
         }
