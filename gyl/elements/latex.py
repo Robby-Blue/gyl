@@ -1,3 +1,4 @@
+import xml.etree.ElementTree as ET
 from gyl.element import Element
 from gyl.size import lineheight
 from PIL import Image
@@ -41,6 +42,7 @@ class Latex(Element):
         if not os.path.exists(svg_file):
             self.create_latex(full_latex)
             self.create_svg(svg_file)
+            self.process_svg(svg_file)
 
         out = BytesIO()
         cairosvg.svg2png(url=svg_file, write_to=out, negate_colors=True)
@@ -74,6 +76,27 @@ class Latex(Element):
             stderr=subprocess.DEVNULL)
         p.wait()
         shutil.rmtree("latextmp")
+
+    def process_svg(self, svg_file):
+        tree = ET.parse(svg_file)
+        root = tree.getroot()
+
+        x, y, width, height = [float(n) for n in root.attrib['viewBox'].split(" ")]
+        
+        # 1%
+        x_padding = width*.01
+        y_padding = height*.01
+
+        x-=x_padding
+        y-=y_padding
+        width+=x_padding*2
+        height+=y_padding*2
+        
+        root.attrib['width'] = f"{width}pt"
+        root.attrib['height'] = f"{height}pt"
+        root.attrib['viewBox'] = f"{x} {y} {width} {height}"
+
+        tree.write(svg_file)
 
     def draw(self):
         return self.image
