@@ -5,6 +5,7 @@ class Animation():
     element = None
     interpolator = None
     scene = None
+    length = 0.5
 
     def __init__(self, interpolator, start_time=0):
         if not interpolator:
@@ -24,7 +25,10 @@ class Animation():
         return self.start_time + self.get_length()
 
     def get_length(self):
-        raise NotImplementedError()
+        return self.length
+    
+    def set_length(self, length):
+        self.length = length
 
     def apply_to_element(self, frame, element):
         raise NotImplementedError()

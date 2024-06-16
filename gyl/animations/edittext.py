@@ -45,6 +45,3 @@ class EditText(Animation):
     
     def get_animation_type(self):
         return "EDITATTR"
-
-    def get_length(self):
-        return 0.3
