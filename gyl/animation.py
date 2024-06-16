@@ -29,6 +29,7 @@ class Animation():
     
     def set_length(self, length):
         self.length = length
+        return self
 
     def apply_to_element(self, frame, element):
         raise NotImplementedError()
