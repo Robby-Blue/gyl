@@ -24,7 +24,7 @@ class SlideReveal(Animation):
         return "EDITIMG"
 
     def get_length(self):
-        return 20
+        return 0.3
        
     def get_cache(self):
         return {

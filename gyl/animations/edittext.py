@@ -47,4 +47,4 @@ class EditText(Animation):
         return "EDITATTR"
 
     def get_length(self):
-        return 50
+        return 0.3

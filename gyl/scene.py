@@ -16,15 +16,15 @@ class Scene():
     def add_animation(self, animation):
         self.animations.append(animation)
 
-    def render(self, file_name, resolution):
-        frames = self.plan_frames()
+    def render(self, file_name, resolution, fps):
+        frames = self.plan_frames(fps)
 
         is_cached, write_cache = self.is_cached(file_name, frames)
         if is_cached:
             return False
 
         last_frame = None
-        renderer = VideoRenderer(file_name, resolution)
+        renderer = VideoRenderer(file_name, resolution, fps)
 
         for frame_count, frame in enumerate(frames):
             img = Image.new("RGBA", resolution, color=(20, 20, 20))
@@ -52,7 +52,7 @@ class Scene():
                 res_im = im.resize((int(width), int(height)), resample=Image.LANCZOS)
 
                 for animation in post_draw_animations:
-                    res_im = animation.apply_to_img(res_im, frame_count)
+                    res_im = animation.apply_to_img(res_im, frame_count/fps)
 
                 img.paste(res_im, (int(x),int(y)),mask=res_im)
 
@@ -67,7 +67,7 @@ class Scene():
 
         return True
 
-    def plan_frames(self):
+    def plan_frames(self, fps):
         frame_count = 0
         animations = []
 
@@ -77,18 +77,21 @@ class Scene():
             animation.element = event["element"]
             animation.scene = self
             animations.append(animation)
-            if animation.get_last_frame() > frame_count:
-                frame_count = animation.get_last_frame()
+            if animation.get_end_time()*fps > frame_count:
+                frame_count = animation.get_end_time()*fps
 
         frames = []
-         
-        for i in range(frame_count+1):
+        
+        if frame_count < 1:
+            frame_count = 1
+
+        for i in range(int(frame_count)):
             for animation in animations:
-                if i > animation.get_last_frame():
+                if i > animation.get_end_time()*fps:
                     continue
                 if animation.get_animation_type() != "EDITATTR":
                     continue
-                animation.apply_to_element(i)
+                animation.apply_to_element(i/fps)
 
             frames.append([])
             for element in self.elements:
@@ -97,7 +100,7 @@ class Scene():
                 for animation in animations:
                     if animation.element != element:
                         continue
-                    if i > animation.get_last_frame():
+                    if i > animation.get_end_time()*fps:
                         continue
                     if animation.get_animation_type() != "EDITIMG":
                         continue

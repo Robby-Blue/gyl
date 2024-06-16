@@ -18,8 +18,9 @@ class Video():
         if not os.path.exists(cache_folder):
             os.mkdir(cache_folder)
 
-    def render(self, resolution=(1280, 720), render_full=False):
+    def render(self, resolution=(1280, 720), fps=30, render_full=False):
         self.resolution = resolution
+        self.fps = fps
         rendered = 0
 
         output_folder = "scenes"
@@ -30,7 +31,7 @@ class Video():
             output_file = f"{output_folder}/{i}.mp4"
             f.write(f"file '{os.path.abspath(output_file)}'\n")
 
-            did_render = scene.render(output_file, resolution)
+            did_render = scene.render(output_file, resolution, fps)
 
             if did_render:
                 rendered+=1
@@ -41,6 +42,7 @@ class Video():
                 "ffmpeg",
                 "-y",
                 "-safe", "0",
+                "-r", str(fps),
                 "-f", "concat",
                 "-i", scenes_file,
                 "-pix_fmt", "yuv420p",

@@ -21,7 +21,7 @@ class Move(Animation):
             self.interpolate(self.start_pos[1], self.normal_destination[1], frame)
         )
 
-        if frame == self.get_last_frame():
+        if frame == self.get_end_time():
             self.element.position = self.destination
 
     def get_end_width(self):
@@ -37,4 +37,4 @@ class Move(Animation):
         return "EDITATTR"
 
     def get_length(self):
-        return 20
+        return 0.3

@@ -6,22 +6,22 @@ class Animation():
     interpolator = None
     scene = None
 
-    def __init__(self, interpolator, start_frame=0):
+    def __init__(self, interpolator, start_time=0):
         if not interpolator:
             interpolator = smooth()
 
         self.interpolator = interpolator
-        self.start_frame = start_frame
+        self.start_time = start_time
 
     def interpolate(self, val1, val2, frame):
-        if frame < self.start_frame:
+        if frame < self.start_time:
             return val1
-        if frame > self.start_frame+self.get_length():
+        if frame > self.start_time+self.get_length():
             return val2
-        return self.interpolator(val1, val2, (frame-self.start_frame)/self.get_length())
+        return self.interpolator(val1, val2, (frame-self.start_time)/self.get_length())
 
-    def get_last_frame(self):
-        return self.start_frame + self.get_length()
+    def get_end_time(self):
+        return self.start_time + self.get_length()
 
     def get_length(self):
         raise NotImplementedError()

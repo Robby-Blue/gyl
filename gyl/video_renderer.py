@@ -1,14 +1,14 @@
 import subprocess
 
 class VideoRenderer():
-    def __init__(self, file_name, resolution):
+    def __init__(self, file_name, resolution, fps):
         command = [
             "ffmpeg",
             "-y",  # overwrite output file if it exists
             "-f", "rawvideo",
             "-s", f"{resolution[0]}x{resolution[1]}", # resolution
             "-pix_fmt", "rgba",
-            "-r", "30",  # fps
+            "-r", str(fps),  # fps
             "-i", "-",  # input is pipe
             "-an",
             "-loglevel", "error",

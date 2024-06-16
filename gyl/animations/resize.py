@@ -15,11 +15,11 @@ class Resize(Animation):
 
         self.element.width = self.interpolate(self.start_width, self.normed_destination_width, frame)
 
-        if frame == self.get_last_frame():
+        if frame == self.get_end_time():
             self.element.width = self.destination_width
 
     def get_animation_type(self):
         return "EDITATTR"
 
     def get_length(self):
-        return 20
+        return 0.3
