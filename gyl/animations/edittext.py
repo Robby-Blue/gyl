@@ -4,10 +4,10 @@ from fast_diff_match_patch import diff
 
 class EditText(Animation):
 
-    def __init__(self, text, interpolation=None, start_frame=0):
+    def __init__(self, text, interpolation=None, start_time=0):
         if not interpolation:
             interpolation = linear()
-        super().__init__(interpolation, start_frame)
+        super().__init__(interpolation, start_time)
         self.start_string = None
         self.end_string = text
         self.steps = None

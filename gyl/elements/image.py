@@ -8,7 +8,7 @@ class Img(Element):
         if not width:
             width = 50
         super().__init__(position, width)
-        self.image = PIL.Image.open(path)
+        self.image = PIL.Image.open(path).convert('RGBA')
         self.path = path
 
     def draw(self):

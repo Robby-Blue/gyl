@@ -3,8 +3,8 @@ from gyl.animations.resize import Resize
 
 class Move(Animation):
 
-    def __init__(self, x, y, interpolation=None, start_frame=0):
-        super().__init__(interpolation, start_frame)
+    def __init__(self, x, y, interpolation=None, start_time=0):
+        super().__init__(interpolation, start_time)
         self.start_pos = None
         self.destination = (x, y)
         self.normal_destination = None

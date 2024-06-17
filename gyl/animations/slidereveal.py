@@ -3,10 +3,10 @@ from gyl.animation import Animation
 
 class SlideReveal(Animation):
 
-    def __init__(self, appear=True, inverse=False, interpolation=None, start_frame=0):
+    def __init__(self, appear=True, inverse=False, interpolation=None, start_time=0):
         self.appear = appear
         self.inverse = inverse
-        super().__init__(interpolation, start_frame)
+        super().__init__(interpolation, start_time)
 
     def apply_to_img(self, im, frame):
         width, height = im.size
