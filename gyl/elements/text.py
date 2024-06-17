@@ -16,9 +16,14 @@ text_height = heightbbox[3]
 
 class Text(Element):
 
-    def __init__(self, text, position, width=None):
+    text_color = (230, 230, 230)
+    outline_color = (0, 0, 0)
+    outline_width = 0
+
+    def __init__(self, text, position, width=None, *, outline_width=0):
         if not width:
             width = lineheight(10)
+        self.outline_width = outline_width
         super().__init__(position, width)
         self.text = text
 
@@ -27,10 +32,11 @@ class Text(Element):
         
         text_width = bbox[2]
 
-        img = Image.new('RGBA', (text_width, text_height))
+        margin = +self.outline_width
+        img = Image.new('RGBA', (text_width+margin, text_height+margin))
         draw = ImageDraw.Draw(img)
 
-        draw.text((0, 0), self.text, fill=(230, 230, 230), font=text_font)
+        draw.text((0, 0), self.text, fill=self.text_color, font=text_font, stroke_fill=self.outline_color, stroke_width=self.outline_width)
 
         return img
     
@@ -43,5 +49,10 @@ class Text(Element):
             "type": "Text",
             "pos": self.normal_pos(),
             "size": self.normal_width(),
-            "text": self.text
+            "text": self.text,
+            "color": self.text_color,
+            "outline": {
+                "color": self.outline_color,
+                "width": self.outline_width
+            }
         }
