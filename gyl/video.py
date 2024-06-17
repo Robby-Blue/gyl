@@ -1,9 +1,9 @@
-from gyl.scene import Scene
+from gyl.scenes import AnimationScene, WaitScene
 import subprocess
 import os
 
 class Video():
-    
+
     elements = []
     scenes = []
 
@@ -72,7 +72,11 @@ class Video():
             self.remove_element(element)
 
     def add_scene(self):
-        self.scenes.append(Scene(self.elements))
+        self.scenes.append(AnimationScene(self.elements))
+
+    def wait(self, seconds):
+        self.scenes.append(WaitScene(self.elements, seconds))
+        self.add_scene()
 
     def current_scene(self):
         return self.scenes[-1]
