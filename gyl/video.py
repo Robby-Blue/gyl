@@ -6,6 +6,7 @@ class Video():
 
     elements = []
     scenes = []
+    audio_path = None
 
     def __init__(self):
         self.add_scene()
@@ -44,11 +45,18 @@ class Video():
                 "-safe", "0",
                 "-r", str(fps),
                 "-f", "concat",
-                "-i", scenes_file,
-                "-pix_fmt", "yuv420p",
-                "-loglevel", "error",
-                "full.mp4"
+                "-i", scenes_file
             ]
+
+            if self.audio_path:
+                command += ["-i", self.audio_path]
+
+            command+=[
+                "-pix_fmt", "yuv420p",
+                "-loglevel", "error"
+            ]
+
+            command.append("full.mp4")
 
             subprocess.Popen(command)
 
@@ -80,3 +88,6 @@ class Video():
 
     def current_scene(self):
         return self.scenes[-1]
+    
+    def set_audio(self, path):
+        self.audio_path = path

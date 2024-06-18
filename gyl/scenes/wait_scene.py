@@ -45,8 +45,6 @@ class WaitScene(Scene):
 
         img.save(f"{file_name}.frame.png", "png")
 
-        print(str(self.time))
-
         command = [
             "ffmpeg",
             "-y",
