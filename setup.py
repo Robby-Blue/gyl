@@ -12,5 +12,8 @@ setup(
         'Pillow',
         'cairosvg'
     ],
-    data_files=[('gyl/fonts', ['gyl/fonts/Roboto-Black.ttf'])],
+    include_package_data=True,
+    package_data={
+        'gyl': ['fonts/*.ttf']
+    }
 )
