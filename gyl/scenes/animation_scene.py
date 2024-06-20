@@ -57,8 +57,9 @@ class AnimationScene(Scene):
 
                 img.paste(res_im, (int(x),int(y)),mask=res_im)
 
-            renderer.add_frame(img)
-            if frame_count == len(frames)-1:
+            if frame_count < len(frames)-1:
+                renderer.add_frame(img)
+            else:
                 last_frame = img
         
         renderer.done()
