@@ -58,7 +58,8 @@ class Video():
 
             command.append("full.mp4")
 
-            subprocess.Popen(command)
+            p = subprocess.Popen(command)
+            p.wait()
 
     def add_element(self, element):
         element.video = self
